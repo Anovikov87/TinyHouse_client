@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, Affix } from "antd";
 import {
   Listings,
   Home,
@@ -16,6 +16,7 @@ import * as serviceWorker from "./serviceWorker";
 import AppoloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import "./styles/index.css";
+import { AppHeader } from "./sections/AppHeader";
 
 const client = new AppoloClient({
   uri: "/api",
@@ -31,10 +32,12 @@ const initialViewer: Viewer = {
 
 const App = () => {
   const [viewer, setViewer] = useState<Viewer>(initialViewer);
-  console.log(viewer);
   return (
     <Router>
       <Layout id="app">
+        <Affix className="app__addix-header" offsetTop={0}>
+          <AppHeader viewer={viewer} setViewer={setViewer} />
+        </Affix>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/host" component={Host} />
